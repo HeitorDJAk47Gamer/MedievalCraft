@@ -1,0 +1,395 @@
+/* --- 1. Configuração das Variáveis (Tema) --- */
+
+/* :root define as variáveis padrão (MODO ESCURO) */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --header-bg: #222222;
+    --header-border: #444;
+    --card-bg: #252525;
+    --footer-bg: #111;
+    --accent-color: #ffd700; /* Dourado */
+    --accent-color-hover: #ffec8a;
+    --ip-bg: #111;
+    --ip-text: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* O JavaScript vai adicionar/remover esta classe do <body> */
+body.light-mode {
+    --bg-color: #f4f4f4;
+    --text-color: #333;
+    --header-bg: #ffffff;
+    --header-border: #e0e0e0;
+    --card-bg: #ffffff;
+    --footer-bg: #222;
+    --accent-color: #c7a100; /* Dourado mais escuro */
+    --accent-color-hover: #b38f00;
+    --ip-bg: #333;
+    --ip-text: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* --- 2. Estilos Gerais --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 3. Cabeçalho e Navegação --- */
+header {
+    background: var(--header-bg);
+    border-bottom: 2px solid var(--header-border);
+    padding: 1.2rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    transition: background-color 0.3s, border-bottom 0.3s;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Espaço entre menu e botão de tema */
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem; /* Espaçamento moderno */
+}
+
+header nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding-bottom: 5px;
+    position: relative;
+    transition: color 0.3s;
+}
+
+/* Linha animada embaixo do link */
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-out;
+}
+
+header nav ul li a:hover::after,
+header nav ul li a.active::after {
+    width: 100%;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    color: var(--accent-color);
+}
+
+/* Botão de Tema */
+.theme-button {
+    background: var(--accent-color);
+    color: var(--ip-bg);
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.theme-button:hover {
+    background: var(--accent-color-hover);
+    transform: scale(1.05);
+}
+
+/* Botão de Menu Móvel (Hamburger) */
+.mobile-menu-button {
+    display: none; /* Escondido no desktop */
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+/* --- 4. Conteúdo da Home (Hero e IP) --- */
+.hero-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../banner.jpg'); /* Adiciona uma sobreposição escura */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff; /* Texto branco para contraste com o banner escuro */
+    padding: 6rem 0; /* Mais padding para o banner ser mais alto */
+    text-align: center;
+    transition: background-color 0.3s; /* Para transição se o tema afetar o fundo */
+    display: flex; /* Para centralizar o conteúdo verticalmente */
+    align-items: center;
+    justify-content: center;
+    min-height: 500px; /* Altura mínima para o banner, ajuste se quiser */
+}
+
+/* Garante que o gradiente e a imagem mudem para o modo claro */
+body.light-mode .hero-banner {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('../banner.jpg');
+    color: var(--text-color); /* Retorna para a cor de texto padrão do modo claro */
+}
+
+.hero-content {
+    /* Fundo semi-transparente para o texto ficar mais legível sobre o banner */
+    background-color: rgba(0, 0, 0, 0.6); 
+    padding: 2.5rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px); /* Efeito de vidro fosco */
+    animation: fadeIn 1.5s ease-out; /* Adiciona uma animação suave */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content h2 {
+    font-size: 3.5rem; /* Título maior */
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+}
+
+.ip-box {
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color); /* Borda dourada */
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    display: inline-block;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.ip-box p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.ip-box .ip-address {
+    font-size: 1.7rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--ip-text);
+    background: var(--ip-bg);
+    padding: 10px 18px;
+    border-radius: 5px;
+    user-select: all;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.info-home {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+/* --- RESPONSIVIDADE PARA O BANNER --- */
+@media (max-width: 768px) {
+    .hero-banner {
+        padding: 4rem 0;
+        min-height: 400px; /* Ajusta altura para celular */
+    }
+
+    .hero-content {
+        padding: 1.5rem 2rem;
+    }
+
+    .hero-content h2 {
+        font-size: 2.5rem; /* Título menor no celular */
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+}
+
+/* --- 5. Rodapé --- */
+footer {
+    background: var(--footer-bg);
+    color: #aaa;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: auto;
+    transition: background-color 0.3s;
+}
+
+/* --- 6. RESPONSIVIDADE APRIMORADA --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Mostra o botão hamburger */
+    .mobile-menu-button {
+        display: block;
+        order: 3; /* Coloca ele no final */
+    }
+
+    /* Ajusta o wrapper do menu */
+    .nav-wrapper {
+        display: none; /* Esconde o menu por padrão */
+        position: absolute;
+        top: 100%; /* Logo abaixo do header */
+        left: 0;
+        width: 100%;
+        background: var(--header-bg);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        box-shadow: 0 10px 10px var(--shadow-color);
+        border-top: 1px solid var(--header-border);
+    }
+
+    /* Classe 'open' que o JavaScript vai adicionar */
+    .nav-wrapper.open {
+        display: flex;
+    }
+
+    header nav ul {
+        flex-direction: column; /* Empilha os links */
+        text-align: center;
+        width: 100%;
+        gap: 0;
+    }
+
+    header nav ul li a {
+        display: block;
+        padding: 1rem 0;
+        width: 100%;
+    }
+
+    /* Remove a animação de linha no móvel */
+    header nav ul li a::after {
+        display: none;
+    }
+
+    header nav ul li a:hover,
+    header nav ul li a.active {
+        background: var(--shadow-color);
+        color: var(--accent-color);
+    }
+    
+    .theme-button {
+        margin-top: 1rem;
+    }
+
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+    .ip-box .ip-address {
+        font-size: 1.3rem;
+    }
+}
+
+/* --- 7. Estilo para Páginas de Conteúdo (Sobre, Equipe, etc.) --- */
+.page-content {
+    background: var(--card-bg);
+    padding: 2rem 0;
+    margin: 2rem auto;
+    max-width: 1100px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: background-color 0.3s;
+}
+
+/* Ajuste para o .container dentro do .page-content */
+.page-content .container {
+    max-width: 900px;
+}
+
+.page-content h2 {
+    font-size: 2.2rem;
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--header-border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.page-content p {
+    margin-bottom: 15px;
+}
+.page-content h3 {
+    font-size: 1.5rem;
+    color: var(--accent-color-hover);
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+/* --- 8. Estilos da Página de Equipe --- */
+
+/* Cria um grid responsivo para as cabeças */
+.team-grid {
+    display: grid;
+    /* Cria colunas de no mínimo 90px (para caber a cabeça de 80px + borda) */
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 1.5rem; /* Espaço entre as cabeças */
+    margin-top: 2rem;
+    justify-items: center; /* Centraliza as cabeças em suas colunas */
+}
+
+.team-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0; /* Remove a margem antiga */
+    
+    /* Garante que a imagem do Minecraft não fique borrada */
+    image-rendering: pixelated; 
+    
+    /* Adiciona um efeito de hover */
+    transition: transform 0.2s ease-out, box-shadow 0.2s;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.team-avatar:hover {
+    transform: scale(1.1); /* Efeito de leve zoom */
+    box-shadow: 0 6px 15px var(--shadow-color);
+}
